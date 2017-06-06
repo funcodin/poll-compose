@@ -6,9 +6,7 @@ services:
   ports:
    - 3306:3306
   environment:
-   MYSQL_ALLOW_EMPTY_PASSWORD: yes
-   MYSQL_HOST: localhost
-   MYSQL_PORT: 3306
+   MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
   volumes:
    - "./initialize-db.sql:/docker-entrypoint-initdb.d/initialize-db.sql"
  poll-core:

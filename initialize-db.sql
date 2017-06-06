@@ -1,6 +1,4 @@
 create schema if not exists `pollforfun`;
-create user 'pollforfun'@'pollbagdb' identified by 'pollforfun';
-grant all on pollforfun.* TO 'pollforfun'@'pollbagdb' identified by 'pollforfun';
 use pollforfun;
 
 
@@ -36,6 +34,17 @@ create table options(
 	);
 
 
+create table user (
+	id varchar(255) NOT NULL,
+	user_name varchar(255) NOT NULL UNIQUE,
+	password varchar(255) NOT NULL,
+	created_date timestamp NOT NULL default current_timestamp,
+	modified_date timestamp NOT NULL default current_timestamp on update current_timestamp,
+	PRIMARY KEY (id),
+	INDEX `user_name_idx` (`user_name`)
+	);
+
+
 create table user_poll(
 	user_id varchar(255) NOT NULL,
 	option_id varchar(255) NOT NUll,
@@ -51,15 +60,6 @@ create table user_poll(
 	REFERENCES options(id)
 );
 
-create table user (
-	id varchar(255) NOT NULL,
-	user_name varchar(255) NOT NULL UNIQUE,
-	password varchar(255) NOT NULL,
-	created_date timestamp NOT NULL default current_timestamp,
-	modified_date timestamp NOT NULL default current_timestamp on update current_timestamp,
-	PRIMARY KEY (id),
-	INDEX `user_name_idx` (`user_name`)
-	);
 
 create table user_comments(
 comment_index int NOT NULL AUTO_INCREMENT,
@@ -75,6 +75,7 @@ REFERENCES user(id),
 primary key (comment_index),
 INDEX `user_comment_question_idx` (`question_id`)
 );
+
 
 
 create table user_details (
@@ -141,20 +142,6 @@ create table user_friends(
 );
 
 
-create table user_comments(
-comment_index int NOT NULL AUTO_INCREMENT,
-question_id varchar(255) NOT NULL,	
-user_id varchar(255) NOT NULL,
-comment varchar (500),
-created_date timestamp NOT NULL default current_timestamp,
-modified_date timestamp NOT NULL default current_timestamp on update current_timestamp,
-CONSTRAINT fk_comment_question_id FOREIGN KEY ( question_id )
-REFERENCES question(id),
-CONSTRAINT fk_comment_user_id FOREIGN KEY ( user_id )
-REFERENCES user(id),
-primary key (comment_index),
-INDEX `user_comment_question_idx` (`question_id`)
-);
 
 
 
