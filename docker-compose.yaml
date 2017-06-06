@@ -1,6 +1,14 @@
 version: '3'
 
 services:
+ poll-web:
+  depends_on:
+   - poll-core
+  build : ../social-poll-webapp/poll-webapp
+  volumes:
+   - ../poll-web:/usr/src/web
+  ports:
+   - 4200:4200
  poll_db:
   image: mysql:5.7
   ports:
