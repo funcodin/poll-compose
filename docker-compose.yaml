@@ -1,0 +1,19 @@
+version: '3'
+
+services:
+ poll_db:
+  image: mysql:5.7
+  ports:
+   - 3306:3306
+  environment:
+   MYSQL_ALLOW_EMPTY_PASSWORD: "true"
+  volumes:
+   - "./initialize-db.sql:/docker-entrypoint-initdb.d/initialize-db.sql"
+ poll-core:
+  depends_on:
+   - poll_db
+  build : ../poll-core
+  volumes:
+   - ../poll-core:/usr/src/app
+  ports:
+   - 8080:8080
